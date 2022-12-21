@@ -1,0 +1,24 @@
+{
+  "name": "wcs_racing_league",
+  "description": "Racing League app with ranking",
+  "version": "0.1.0",
+  "dependencies": {
+    "@capacitor/android": "^4.6.1",
+    "@capacitor/cli": "^4.6.1",
+    "@capacitor/core": "^4.6.1"
+  },
+  "scripts": {
+    "dev": "npm start --prefix ./client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jbristhuille/wcs_racing_league.git"
+  },
+  "keywords": [],
+  "author": "Jbristhuille",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jbristhuille/wcs_racing_league/issues"
+  },
+  "homepage": "https://github.com/Jbristhuille/wcs_racing_league#readme"
+}
