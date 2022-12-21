@@ -5,10 +5,13 @@
   "dependencies": {
     "@capacitor/android": "^4.6.1",
     "@capacitor/cli": "^4.6.1",
-    "@capacitor/core": "^4.6.1"
+    "@capacitor/core": "^4.6.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
   },
   "scripts": {
-    "dev": "npm start --prefix ./client"
+    "dev-client": "npm start --prefix ./client",
+    "dev-server": "npm run dev --prefix ./server"
   },
   "repository": {
     "type": "git",
