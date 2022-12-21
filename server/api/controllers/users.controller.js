@@ -7,10 +7,12 @@
 /* SUMMARY
     * Imports
     * Name: signup
+    * Name: login
 */
 
 /* Imports */
 const sha256 = require('js-sha256');
+const jwt = require('jsonwebtoken');
 const usersModel = require('../models/userS.model');
 /***/
 
@@ -38,6 +40,30 @@ const signup = async (req, res) => {
 };
 /***/
 
+/*
+*/
+const login = async (req, res) => {
+    try {
+        let {email, passwd} = req.body;
+        let [[user]] = await usersModel.findByEmail(email);
+
+        if (user) {
+            if (user.passwd == sha256(passwd)) {
+                delete user.passwd;
+                user['token'] = jwt.sign(user, process.env.TOKEN_SECRET, {expiresIn: process.env.TOKEN_TIMEOUT});
+                return res.status(200).send(user);
+            }
+        } else {
+            return res.status(404).send('User Not Found');
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+    }
+};
+/***/
+
 module.exports = {
-    signup
+    signup,
+    login
 };

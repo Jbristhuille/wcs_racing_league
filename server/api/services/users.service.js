@@ -7,6 +7,7 @@
 /* SUMMARY
     * Imports
     * Name: createDto
+    * Name: connectionDto
     * Name: isUserExist
 */
 
@@ -32,6 +33,23 @@ const createDto = (req, res, next) =>{
 /***/
 
 /*
+* Name: connectionDto
+* Description: Check login request body
+*/
+const connectionDto = (req, res, next) => {
+    try {
+        let {email, passwd} = req.body;
+        
+        if (email && passwd) return next();
+        else return res.status(400).send('Bad Request');
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+    }
+}
+/***/
+
+/*
 * Name: isUserExist
 * Description: Check if user already exist
 */
@@ -41,7 +59,7 @@ const isUserExist = async (req, res, next) => {
         let [[user]] = await usersModel.findByEmail(email);
 
         if (user) return res.status(403).send('User Already Exist');
-        else next();
+        else return next();
     } catch (err) {
         console.error(err);
         return res.status(500).send('Internal Server Error');
@@ -51,5 +69,6 @@ const isUserExist = async (req, res, next) => {
 
 module.exports = {
     createDto,
+    connectionDto,
     isUserExist
 };
