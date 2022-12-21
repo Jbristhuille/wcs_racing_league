@@ -1,0 +1,13 @@
+DROP DATABASE wcsRL;
+
+CREATE DATABASE wcsRL;
+USE wcsRL;
+
+CREATE TABLE users (
+    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    email VARCHAR(255) NOT NULL,
+    passwd VARCHAR(256) NOT NULL,
+    nickname VARCHAR(128) NOT NULL,
+    img VARCHAR(512) DEFAULT 'default.png',
+    points INT DEFAULT 0
+);

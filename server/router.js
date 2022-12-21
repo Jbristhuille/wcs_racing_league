@@ -6,11 +6,26 @@
 
 /* SUMMARY
     * Imports
+    * Controllers
+    * Services
+    * Users
 */
 
 /* Imports */
 const express = require('express');
 const router = express.Router();
+/***/
+
+/* Controllers */
+const usersController = require('./api/controllers/users.controller');
+/***/
+
+/* Services */
+const usersService = require('./api/services/users.service');
+/***/
+
+/* Users */
+router.post('/users', usersService.createDto, usersService.isUserExist, usersController.signup);
 /***/
 
 module.exports = router;

@@ -1,0 +1,55 @@
+/**
+ * @ Author: Jbristhuille
+ * @ Create Time: 2022-12-21 15:26:19
+ * @ Description: Users endpoint middleware and services
+ */
+
+/* SUMMARY
+    * Imports
+    * Name: createDto
+    * Name: isUserExist
+*/
+
+/* Imports */
+const usersModel = require('../models/users.model');
+/***/
+
+/*
+* Name: createDto
+* Description: Vertify body data on user creation
+*/
+const createDto = (req, res, next) =>{
+    try {
+        let {email, passwd, nickname} = req.body;
+
+        if (email && passwd && nickname) return next();
+        else return res.status(400).send('Bad Request');
+    } catch(err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+    }
+};
+/***/
+
+/*
+* Name: isUserExist
+* Description: Check if user already exist
+*/
+const isUserExist = async (req, res, next) => {
+    try {
+        let {email} = req.body;
+        let [[user]] = await usersModel.findByEmail(email);
+
+        if (user) return res.status(403).send('User Already Exist');
+        else next();
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+    }
+}
+/***/
+
+module.exports = {
+    createDto,
+    isUserExist
+};
