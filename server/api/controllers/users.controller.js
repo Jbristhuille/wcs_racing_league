@@ -6,6 +6,7 @@
 
 /* SUMMARY
     * Imports
+    * Name: getUsersList
     * Name: signup
     * Name: login
 */
@@ -13,7 +14,24 @@
 /* Imports */
 const sha256 = require('js-sha256');
 const jwt = require('jsonwebtoken');
-const usersModel = require('../models/userS.model');
+const usersModel = require('../models/users.model');
+/***/
+
+/*
+* Name: getUsersList
+* Description: Get public users list
+*
+* Return (Array): Public users list
+*/
+const getUsersList = async (req, res) => {
+    try {
+        let [users] = await usersModel.find();
+        return res.status(200).send(users);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+    }
+}
 /***/
 
 /*
@@ -42,6 +60,14 @@ const signup = async (req, res) => {
 /***/
 
 /*
+* Name: login
+* Description: Connect user
+*
+* Body:
+* - email (String): User email
+* - passwd (String): User password
+*
+* Return (Object): User data with token
 */
 const login = async (req, res) => {
     try {
@@ -67,6 +93,7 @@ const login = async (req, res) => {
 /***/
 
 module.exports = {
+    getUsersList,
     signup,
     login
 };
