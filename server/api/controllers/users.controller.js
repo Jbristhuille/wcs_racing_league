@@ -32,6 +32,7 @@ const signup = async (req, res) => {
         let [result] = await usersModel.create(email, sha256(passwd), nickname);
         let [[user]] = await usersModel.findById(result.insertId);
 
+        delete user.passwd;
         return res.status(201).send(user);
     } catch (err) {
         console.error(err);
@@ -52,6 +53,8 @@ const login = async (req, res) => {
                 delete user.passwd;
                 user['token'] = jwt.sign(user, process.env.TOKEN_SECRET, {expiresIn: process.env.TOKEN_TIMEOUT});
                 return res.status(200).send(user);
+            } else {
+                return res.status(403).send('Invalid Credentials');
             }
         } else {
             return res.status(404).send('User Not Found');
