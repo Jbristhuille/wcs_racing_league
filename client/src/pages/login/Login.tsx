@@ -7,16 +7,21 @@
 /* SUMMARY
     * Imports
     * Styles
+    * Contexts
 */
 
 /* Imports */
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 /***/
 
 /* Styles */
 import './Login.scss';
+/***/
+
+/* Contexts */
+import ErrorContext from "../../contexts/ErrorContext";
 /***/
 
 const Login = () => {
@@ -25,6 +30,7 @@ const Login = () => {
     const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
     const [isPasswdValid, setIsPasswdValid] = useState<boolean>(true);
     const navigate = useNavigate();
+    const error = useContext(ErrorContext);
 
     useEffect(() => {
         setIsEmailValid(email !== undefined ? (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(email) : true); // Check email
@@ -41,11 +47,11 @@ const Login = () => {
                 navigate('/');
             }).catch((err) => {
                 console.error(err.response.data);
-                // todo: print error
+                error.setMessage(err.response.data);
             });
         } else {
             console.error('Email ou mot de passe incorrect');
-            // todo: print error
+            error.setMessage('Email ou mot de passe incorrect');
         }
     };
 

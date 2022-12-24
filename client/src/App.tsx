@@ -24,17 +24,23 @@ import Login from './pages/login/Login';
 /***/
 
 /* Components */
+import ErrorPopup from './components/ErrorPopup';
+import { ErrorContextProvider } from './contexts/ErrorContext';
 /***/
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<div>Hello world</div>} /> {/* Tmp: need to create home page */}
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </BrowserRouter>
+      <ErrorContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<div>Hello world</div>} /> {/* Tmp: need to create home page */}
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </BrowserRouter>
+
+        <ErrorPopup />
+      </ErrorContextProvider>
     </div>
   );
 }
