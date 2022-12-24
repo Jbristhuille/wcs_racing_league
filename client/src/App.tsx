@@ -35,7 +35,7 @@ import { LoggedContextProvider } from './contexts/LoggedContext';
 /***/
 
 /* Guards */
-import LoggedUserGuard from './components/logged-user-guard/LoggedUserGuard';
+import LoggedUserGuard from './guards/LoggedUserGuard';
 /***/
 
 function App() {

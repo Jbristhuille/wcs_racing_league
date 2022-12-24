@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 /***/
 
 /* Contexts */
-import LoggedContext from "../../contexts/LoggedContext";
+import LoggedContext from "../contexts/LoggedContext";
 /***/
 
 /* Interface */
