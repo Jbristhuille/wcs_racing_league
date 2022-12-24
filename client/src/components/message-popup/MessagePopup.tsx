@@ -28,8 +28,6 @@ const ErrorPopup = () => {
     const timeout = useRef<any>();
 
     useEffect(() => {
-        console.log(msg.message);
-
         if (msg.message) { // Clear error message
             if (timeout.current) clearTimeout(timeout.current); // Reset message time
 
