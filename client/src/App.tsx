@@ -23,6 +23,7 @@ import './App.scss';
 
 /* Pages */
 import Login from './pages/login/Login';
+import Signup from './pages/signup/Signup';
 /***/
 
 /* Components */
@@ -52,6 +53,7 @@ function App() {
               }/>
 
               <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
               <Route path="*" element={<div>Not found</div>} /> {/* Tmp: need to create not found page */}
             </Routes>
           </BrowserRouter>
