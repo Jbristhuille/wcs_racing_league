@@ -10,6 +10,7 @@
   * Pages
   * Components
   * Context providers
+  * Guards
 */
 
 /* Imports */
@@ -33,6 +34,10 @@ import { ErrorContextProvider } from './contexts/ErrorContext';
 import { LoggedContextProvider } from './contexts/LoggedContext';
 /***/
 
+/* Guards */
+import LoggedUserGuard from './components/logged-user-guard/LoggedUserGuard';
+/***/
+
 function App() {
   return (
     <div className="App">
@@ -40,8 +45,14 @@ function App() {
         <ErrorContextProvider>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<div>Hello world</div>} /> {/* Tmp: need to create home page */}
+              <Route path="/" element={
+                <LoggedUserGuard>
+                  <div>Hello world</div>  {/* Tmp: need to create home page*/}
+                </LoggedUserGuard>
+              }/>
+
               <Route path="/login" element={<Login />} />
+              <Route path="*" element={<div>Not found</div>} /> {/* Tmp: need to create not found page */}
             </Routes>
           </BrowserRouter>
 
