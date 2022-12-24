@@ -7,6 +7,7 @@
 /* SUMMARY
     * Imports
     * Contexts
+    * Styles
 */
 
 /* Imports */
@@ -14,7 +15,11 @@ import { useContext, useEffect, useRef } from "react";
 /***/
 
 /* Contexts */
-import ErrorContext from "../contexts/ErrorContext";
+import ErrorContext from "../../contexts/ErrorContext";
+/***/
+
+/* Styles */
+import "./ErrorPopup.scss";
 /***/
 
 const ErrorPopup = () => {

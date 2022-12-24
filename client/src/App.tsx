@@ -9,6 +9,7 @@
   * Styles
   * Pages
   * Components
+  * Context providers
 */
 
 /* Imports */
@@ -24,7 +25,10 @@ import Login from './pages/login/Login';
 /***/
 
 /* Components */
-import ErrorPopup from './components/ErrorPopup';
+import ErrorPopup from './components/error-popup/ErrorPopup';
+/***/
+
+/* Context providers */
 import { ErrorContextProvider } from './contexts/ErrorContext';
 /***/
 
