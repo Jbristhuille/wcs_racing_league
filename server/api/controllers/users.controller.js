@@ -29,7 +29,7 @@ const getUsersList = async (req, res) => {
         return res.status(200).send(users);
     } catch (err) {
         console.error(err);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).send('Une erreur inconnue est survenu');
     }
 }
 /***/
@@ -54,7 +54,7 @@ const signup = async (req, res) => {
         return res.status(201).send(user);
     } catch (err) {
         console.error(err);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).send('Une erreur inconnue est survenu');
     }
 };
 /***/
@@ -80,14 +80,14 @@ const login = async (req, res) => {
                 user['token'] = jwt.sign(user, process.env.TOKEN_SECRET, {expiresIn: process.env.TOKEN_TIMEOUT});
                 return res.status(200).send(user);
             } else {
-                return res.status(403).send('Invalid Credentials');
+                return res.status(403).send('Identifiants invalide');
             }
         } else {
-            return res.status(404).send('User Not Found');
+            return res.status(404).send("L'utilisateur n'a pas pu être trouvé");
         }
     } catch (err) {
         console.error(err);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).send('Une erreur inconnue est survenu');
     }
 };
 /***/

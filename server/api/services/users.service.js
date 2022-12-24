@@ -24,10 +24,10 @@ const createDto = (req, res, next) =>{
         let {email, passwd, nickname} = req.body;
 
         if (email && passwd && nickname) return next();
-        else return res.status(400).send('Bad Request');
+        else return res.status(400).send('Requête invalide');
     } catch(err) {
         console.error(err);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).send('Une erreur inconnue est survenu');
     }
 };
 /***/
@@ -44,7 +44,7 @@ const connectionDto = (req, res, next) => {
         else return res.status(400).send('Bad Request');
     } catch (err) {
         console.error(err);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).send('Une erreur inconnue est survenu');
     }
 }
 /***/
@@ -58,11 +58,11 @@ const isUserExist = async (req, res, next) => {
         let {email} = req.body;
         let [[user]] = await usersModel.findByEmail(email);
 
-        if (user) return res.status(403).send('User Already Exist');
+        if (user) return res.status(403).send("L'utilisateur existe déjà");
         else return next();
     } catch (err) {
         console.error(err);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).send('Une erreur inconnue est survenu');
     }
 }
 /***/
