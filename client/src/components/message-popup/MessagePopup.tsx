@@ -1,7 +1,7 @@
 /**
  * @ Author: Jbristhuille
  * @ Create Time: 2022-12-24 14:06:41
- * @ Description: Error popup component, print error
+ * @ Description: Message popup component, print error
  */
 
 /* SUMMARY
@@ -15,33 +15,33 @@ import { useContext, useEffect, useRef } from "react";
 /***/
 
 /* Contexts */
-import ErrorContext from "../../contexts/ErrorContext";
+import MessageContext from "../../contexts/MessageContext";
 /***/
 
 /* Styles */
-import "./ErrorPopup.scss";
+import "./MessagePopup.scss";
 /***/
 
 const ErrorPopup = () => {
-    const error = useContext(ErrorContext);
+    const msg = useContext(MessageContext);
     const time: number = 5000; // 5 seconds
     const timeout = useRef<any>();
 
     useEffect(() => {
-        if (error.message) { // Clear error message
+        if (msg.message) { // Clear error message
             if (timeout.current) clearTimeout(timeout.current); // Reset message time
 
             timeout.current = setTimeout(() => {
-                error.setMessage(undefined);
+                msg.setMessage(undefined);
             }, time);
         }
-    }, [error]);
+    }, [msg]);
 
     return (
         <>
-            {error.message && 
-                <div className="wcs-error-popup">
-                    {error.message}
+            {msg.message && 
+                <div className={`wcs-message-popup ${msg.message.type}`}>
+                    {msg.message.txt}
                 </div>
             }
         </>

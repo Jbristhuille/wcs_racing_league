@@ -23,14 +23,15 @@ import './App.scss';
 
 /* Pages */
 import Login from './pages/login/Login';
+import Signup from './pages/signup/Signup';
 /***/
 
 /* Components */
-import ErrorPopup from './components/error-popup/ErrorPopup';
+import MessagePopup from './components/message-popup/MessagePopup';
 /***/
 
 /* Context providers */
-import { ErrorContextProvider } from './contexts/ErrorContext';
+import { MessageContextProvider } from './contexts/MessageContext';
 import { LoggedContextProvider } from './contexts/LoggedContext';
 /***/
 
@@ -42,7 +43,7 @@ function App() {
   return (
     <div className="App">
       <LoggedContextProvider>
-        <ErrorContextProvider>
+        <MessageContextProvider>
           <BrowserRouter>
             <Routes>
               <Route path="/" element={
@@ -52,12 +53,13 @@ function App() {
               }/>
 
               <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
               <Route path="*" element={<div>Not found</div>} /> {/* Tmp: need to create not found page */}
             </Routes>
           </BrowserRouter>
 
-          <ErrorPopup />
-        </ErrorContextProvider>
+          <MessagePopup />
+        </MessageContextProvider>
       </LoggedContextProvider>
     </div>
   );
