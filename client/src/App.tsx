@@ -30,21 +30,24 @@ import ErrorPopup from './components/error-popup/ErrorPopup';
 
 /* Context providers */
 import { ErrorContextProvider } from './contexts/ErrorContext';
+import { LoggedContextProvider } from './contexts/LoggedContext';
 /***/
 
 function App() {
   return (
     <div className="App">
-      <ErrorContextProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<div>Hello world</div>} /> {/* Tmp: need to create home page */}
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </BrowserRouter>
+      <LoggedContextProvider>
+        <ErrorContextProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<div>Hello world</div>} /> {/* Tmp: need to create home page */}
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </BrowserRouter>
 
-        <ErrorPopup />
-      </ErrorContextProvider>
+          <ErrorPopup />
+        </ErrorContextProvider>
+      </LoggedContextProvider>
     </div>
   );
 }

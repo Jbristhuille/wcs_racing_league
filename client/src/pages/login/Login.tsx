@@ -22,6 +22,7 @@ import './Login.scss';
 
 /* Contexts */
 import ErrorContext from "../../contexts/ErrorContext";
+import LoggedContext from "../../contexts/LoggedContext";
 /***/
 
 const Login = () => {
@@ -31,6 +32,7 @@ const Login = () => {
     const [isPasswdValid, setIsPasswdValid] = useState<boolean>(true);
     const navigate = useNavigate();
     const error = useContext(ErrorContext);
+    const logged = useContext(LoggedContext);
 
     useEffect(() => {
         setIsEmailValid(email !== undefined ? (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(email) : true); // Check email
@@ -38,12 +40,12 @@ const Login = () => {
     }, [email, passwd]);
 
     const connectUser = (): void => {
-        if (email && passwd && isEmailValid && isPasswdValid) {
-            axios.post(`${process.env.REACT_APP_SERVER}/auth`, {
+        if (email && passwd && isEmailValid && isPasswdValid) { // Check email/password validity
+            axios.post(`${process.env.REACT_APP_SERVER}/auth`, { // Send connection request
                 email: email,
                 passwd: passwd
             }).then((res) => {
-                // todo: save context
+                logged.setUser(res.data);
                 navigate('/');
             }).catch((err) => {
                 console.error(err.response.data);
