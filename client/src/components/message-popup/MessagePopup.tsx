@@ -1,7 +1,7 @@
 /**
  * @ Author: Jbristhuille
  * @ Create Time: 2022-12-24 14:06:41
- * @ Description: Error popup component, print error
+ * @ Description: Message popup component, print error
  */
 
 /* SUMMARY
@@ -19,7 +19,7 @@ import ErrorContext from "../../contexts/ErrorContext";
 /***/
 
 /* Styles */
-import "./ErrorPopup.scss";
+import "./MessagePopup.scss";
 /***/
 
 const ErrorPopup = () => {
@@ -40,7 +40,7 @@ const ErrorPopup = () => {
     return (
         <>
             {error.message && 
-                <div className="wcs-error-popup">
+                <div className="wcs-message-popup">
                     {error.message}
                 </div>
             }

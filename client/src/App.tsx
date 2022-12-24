@@ -27,7 +27,7 @@ import Signup from './pages/signup/Signup';
 /***/
 
 /* Components */
-import ErrorPopup from './components/error-popup/ErrorPopup';
+import ErrorPopup from './components/message-popup/MessagePopup';
 /***/
 
 /* Context providers */
