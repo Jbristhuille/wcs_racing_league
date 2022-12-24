@@ -21,7 +21,7 @@ import './Login.scss';
 /***/
 
 /* Contexts */
-import ErrorContext from "../../contexts/ErrorContext";
+import MessageContext from "../../contexts/MessageContext";
 import LoggedContext from "../../contexts/LoggedContext";
 /***/
 
@@ -31,7 +31,7 @@ const Login = () => {
     const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
     const [isPasswdValid, setIsPasswdValid] = useState<boolean>(true);
     const navigate = useNavigate();
-    const error = useContext(ErrorContext);
+    const msg = useContext(MessageContext);
     const logged = useContext(LoggedContext);
 
     useEffect(() => {
@@ -49,11 +49,11 @@ const Login = () => {
                 navigate('/');
             }).catch((err) => {
                 console.error(err.response.data);
-                error.setMessage(err.response.data);
+                msg.setMessage({txt: err.response.data, type: "error"});
             });
         } else {
             console.error('Email ou mot de passe incorrect');
-            error.setMessage('Email ou mot de passe incorrect');
+            msg.setMessage({txt: 'Email ou mot de passe incorrect', type: "error"});
         }
     };
 

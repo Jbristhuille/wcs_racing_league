@@ -27,11 +27,11 @@ import Signup from './pages/signup/Signup';
 /***/
 
 /* Components */
-import ErrorPopup from './components/message-popup/MessagePopup';
+import MessagePopup from './components/message-popup/MessagePopup';
 /***/
 
 /* Context providers */
-import { ErrorContextProvider } from './contexts/ErrorContext';
+import { MessageContextProvider } from './contexts/MessageContext';
 import { LoggedContextProvider } from './contexts/LoggedContext';
 /***/
 
@@ -43,7 +43,7 @@ function App() {
   return (
     <div className="App">
       <LoggedContextProvider>
-        <ErrorContextProvider>
+        <MessageContextProvider>
           <BrowserRouter>
             <Routes>
               <Route path="/" element={
@@ -58,8 +58,8 @@ function App() {
             </Routes>
           </BrowserRouter>
 
-          <ErrorPopup />
-        </ErrorContextProvider>
+          <MessagePopup />
+        </MessageContextProvider>
       </LoggedContextProvider>
     </div>
   );

@@ -9,5 +9,12 @@
 
 .wcs-message-popup {
     color: white;
-    background: var(--danger-color);
+    
+    &.error {
+        background: var(--danger-color);
+    }
+
+    &.success {
+        background: var(--success-color);
+    }
 }

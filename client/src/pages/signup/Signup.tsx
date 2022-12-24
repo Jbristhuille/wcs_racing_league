@@ -21,7 +21,7 @@ import "./Signup.scss";
 /***/
 
 /* Contexts */
-import ErrorContext from '../../contexts/ErrorContext';
+import MessageContext from '../../contexts/MessageContext';
 /***/
 
 const Signup = () => {
@@ -32,7 +32,7 @@ const Signup = () => {
     const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
     const [isPasswdValid, setIsPasswdValid] = useState<boolean>(true);
     const [isConfirmPasswdValid, setIsConfirmPasswdValid] = useState<boolean>(true);
-    const error = useContext(ErrorContext);
+    const msg = useContext(MessageContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -48,14 +48,15 @@ const Signup = () => {
                 passwd: passwd,
                 nickname: nickname
             }).then((res) => {
+                msg.setMessage({txt: "Inscription réussi", type: "success"});
                 navigate('/login');
             }).catch((err) => {
                 console.error(err.response.data);
-                error.setMessage(err.response.data);
+                msg.setMessage({txt: err.response.data, type: "error"});
             });
         } else {
             console.error('Un ou plusieurs champs sont invalide');
-            error.setMessage('Un ou plusieurs champs sont invalide');
+            msg.setMessage({txt: 'Un ou plusieurs champs sont invalide', type: "error"});
         }
     };
 
