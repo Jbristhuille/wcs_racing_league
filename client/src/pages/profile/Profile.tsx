@@ -47,7 +47,15 @@ const Profile = () => {
     return (
         <div className="wcs-profile">
             {profile && 
-                <div>{profile.nickname}</div>
+                <>
+                    <div className="wcs-profile-avatar">
+                    <img src={`${process.env.REACT_APP_SERVER}/imgs/${profile.img}`} alt="Profil avatar" />
+                    </div>
+
+                    <div>{profile.nickname}</div>
+                    <div>{profile.email}</div>
+                    <div>{profile.points}</div>
+                </>
             }
         </div>
     );
