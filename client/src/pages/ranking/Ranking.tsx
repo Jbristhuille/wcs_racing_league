@@ -45,7 +45,10 @@ const Ranking = () => {
         <div className="wcs-ranking">
             {rankList.map((el) => (
                 <div key={el.id} className="wcs-rank-item">
-                    <div>{el.img}</div>
+                    <div className="wcs-rank-item-avatar">
+                        <img src={`${process.env.REACT_APP_SERVER}/imgs/${el.img}`} alt="Profil avatar" />
+                    </div>
+
                     <div>{el.nickname}</div>
                     <div>{el.points}</div>
                 </div>
