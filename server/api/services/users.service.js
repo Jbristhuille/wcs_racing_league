@@ -9,10 +9,12 @@
     * Name: createDto
     * Name: connectionDto
     * Name: isUserExist
+    * Name: isLogged
 */
 
 /* Imports */
 const usersModel = require('../models/users.model');
+const jwt = require('jsonwebtoken');
 /***/
 
 /*
@@ -67,8 +69,32 @@ const isUserExist = async (req, res, next) => {
 }
 /***/
 
+/*
+* Name: isLogged
+* Description: Check if user has token and it is valid
+*/
+const isLogged = (req, res, next) => {
+    try {
+        let token = req.headers['x-token'];
+        
+        if (token) {
+            jwt.verify(token, process.env.TOKEN_SECRET, (err) => {
+                if (err) return res.status(403).send("Token invalide");
+                else return next();
+            });
+        } else {
+            return res.status(401).send("Identification nécéssaire");
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Une erreur inconnue est survenu');
+    }
+};
+/***/
+
 module.exports = {
     createDto,
     connectionDto,
-    isUserExist
+    isUserExist,
+    isLogged
 };
