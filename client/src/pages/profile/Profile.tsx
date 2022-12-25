@@ -30,22 +30,24 @@ const Profile = () => {
     const message = useContext(MessageContext);
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_SERVER}/users`, {
-            headers: {
-                "x-token": logged.user ? logged.user.token : ""
-            }
-        }).then((res) => {
-            setProfile(res.data);
-        }).catch((err) => {
-            message.setMessage({txt: err.response.data, type: "error"});
-        });
+        if (logged.user) {
+            axios.get(`${process.env.REACT_APP_SERVER}/users/${logged.user.id}`, {
+                headers: {
+                    "x-token": logged.user ? logged.user.token : ""
+                }
+            }).then((res) => {
+                setProfile(res.data);
+            }).catch((err) => {
+                message.setMessage({txt: err.response.data, type: "error"});
+            });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [logged.user]);
 
     return (
         <div className="wcs-profile">
             {profile && 
-                <div>{profile.name}</div>
+                <div>{profile.nickname}</div>
             }
         </div>
     );

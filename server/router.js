@@ -27,7 +27,8 @@ const usersService = require('./api/services/users.service');
 /* Users */
 router.post('/auth', usersService.connectionDto, usersController.login);
 router.post('/users', usersService.createDto, usersService.isUserExist, usersController.signup);
-router.get('/users', usersService.isLogged ,usersController.getUsersList)
+router.get('/users', usersService.isLogged ,usersController.getUsersList);
+router.get('/users/:id', usersService.isSelf, usersController.getUserById);
 /***/
 
 module.exports = router;

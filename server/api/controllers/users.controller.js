@@ -6,6 +6,7 @@
 
 /* SUMMARY
     * Imports
+    * Name: getUserById
     * Name: getUsersList
     * Name: signup
     * Name: login
@@ -15,6 +16,27 @@
 const sha256 = require('js-sha256');
 const jwt = require('jsonwebtoken');
 const usersModel = require('../models/users.model');
+/***/
+
+/*
+* Name: getUserById
+* Description: Get user by id in parameter
+*
+* Params:
+* - id (String): User id;
+*
+* Return (Object): User's data
+*/
+const getUserById = async (req, res) => {
+    try {
+        let [[user]] = await usersModel.findById(Number(req.params.id));
+        delete user.passwd;
+        return res.status(200).send(user);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Une erreur inconnue est survenu');
+    }
+};
 /***/
 
 /*
@@ -93,6 +115,7 @@ const login = async (req, res) => {
 /***/
 
 module.exports = {
+    getUserById,
     getUsersList,
     signup,
     login
