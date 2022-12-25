@@ -13,18 +13,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 
-* Install client dependancies:
+* Install dependancies:
 
 ```
-cd client
-npm install
-```
-
-* Install server dependancies:
-
-```
-cd server
-npm install
+npm run setup
 ```
 
 * Import database:

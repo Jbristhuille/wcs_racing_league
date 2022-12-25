@@ -6,6 +6,7 @@
 
 /* SUMMARY
     * Imports
+    * Name: getUsersList
     * Name: signup
     * Name: login
 */
@@ -13,7 +14,24 @@
 /* Imports */
 const sha256 = require('js-sha256');
 const jwt = require('jsonwebtoken');
-const usersModel = require('../models/userS.model');
+const usersModel = require('../models/users.model');
+/***/
+
+/*
+* Name: getUsersList
+* Description: Get public users list
+*
+* Return (Array): Public users list
+*/
+const getUsersList = async (req, res) => {
+    try {
+        let [users] = await usersModel.find();
+        return res.status(200).send(users);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Une erreur inconnue est survenu');
+    }
+}
 /***/
 
 /*
@@ -36,12 +54,20 @@ const signup = async (req, res) => {
         return res.status(201).send(user);
     } catch (err) {
         console.error(err);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).send('Une erreur inconnue est survenu');
     }
 };
 /***/
 
 /*
+* Name: login
+* Description: Connect user
+*
+* Body:
+* - email (String): User email
+* - passwd (String): User password
+*
+* Return (Object): User data with token
 */
 const login = async (req, res) => {
     try {
@@ -54,19 +80,20 @@ const login = async (req, res) => {
                 user['token'] = jwt.sign(user, process.env.TOKEN_SECRET, {expiresIn: process.env.TOKEN_TIMEOUT});
                 return res.status(200).send(user);
             } else {
-                return res.status(403).send('Invalid Credentials');
+                return res.status(403).send('Identifiants invalide');
             }
         } else {
-            return res.status(404).send('User Not Found');
+            return res.status(404).send("L'utilisateur n'a pas pu être trouvé");
         }
     } catch (err) {
         console.error(err);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).send('Une erreur inconnue est survenu');
     }
 };
 /***/
 
 module.exports = {
+    getUsersList,
     signup,
     login
 };

@@ -6,6 +6,7 @@
 
 /* SUMMARY
     * Imports
+    * Name: find
     * Name: findById
     * Name: create
     * Name: findByEmail
@@ -13,6 +14,17 @@
 
 /* Imports */
 const db = require('../../db');
+/***/
+
+/*
+* Name: find
+* Description: Get all users with public info
+*
+* Return (Array): Users list
+*/
+const find = () => {
+    return db.query('SELECT id, email, nickname, img, points FROM users ORDER BY points DESC');
+}
 /***/
 
 /*
@@ -66,6 +78,7 @@ const create = (email, passwd, nickname) => {
 /***/
 
 module.exports = {
+    find,
     findById,
     findByEmail,
     create
