@@ -23,7 +23,7 @@ const db = require('../../db');
 * Return (Array): Users list
 */
 const find = () => {
-    return db.query('SELECT id, email, nickname, img, points FROM users ORDER BY points DESC');
+    return db.query('SELECT id,  nickname, img, points FROM users ORDER BY points DESC');
 }
 /***/
 
