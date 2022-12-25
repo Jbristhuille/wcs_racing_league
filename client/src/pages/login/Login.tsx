@@ -44,10 +44,10 @@ const Login = () => {
             axios.post(`${process.env.REACT_APP_SERVER}/auth`, { // Send connection request
                 email: email,
                 passwd: passwd
-            }).then((res) => {
+            }).then((res: any) => {
                 logged.setUser(res.data);
                 navigate('/');
-            }).catch((err) => {
+            }).catch((err: any) => {
                 console.error(err.response.data);
                 msg.setMessage({txt: err.response.data, type: "error"});
             });

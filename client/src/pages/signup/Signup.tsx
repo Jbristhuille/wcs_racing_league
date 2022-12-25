@@ -47,10 +47,10 @@ const Signup = () => {
                 email: email,
                 passwd: passwd,
                 nickname: nickname
-            }).then((res) => {
+            }).then((res: any) => {
                 msg.setMessage({txt: "Inscription réussi", type: "success"});
                 navigate('/login');
-            }).catch((err) => {
+            }).catch((err: any) => {
                 console.error(err.response.data);
                 msg.setMessage({txt: err.response.data, type: "error"});
             });
