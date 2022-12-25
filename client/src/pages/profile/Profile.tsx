@@ -1,11 +1,12 @@
 /**
  * @ Author: Jbristhuille
- * @ Create Time: 2022-12-25 12:01:39
- * @ Description: User ranking page
+ * @ Create Time: 2022-12-25 18:32:09
+ * @ Description: User profile page
  */
 
 /* SUMMARY
     * Imports
+    * Contexts
     * Styles
 */
 
@@ -20,13 +21,13 @@ import LoggedContext from "../../contexts/LoggedContext";
 /***/
 
 /* Styles */
-import "./Ranking.scss";
+import "./Profile.scss";
 /***/
 
-const Ranking = () => {
-    const [rankList, setRankList] = useState<any[]>([]);
-    const message = useContext(MessageContext);
+const Profile = () => {
+    const [profile, setProfile] = useState<any | null>(null);
     const logged = useContext(LoggedContext);
+    const message = useContext(MessageContext);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_SERVER}/users`, {
@@ -34,7 +35,7 @@ const Ranking = () => {
                 "x-token": logged.user ? logged.user.token : ""
             }
         }).then((res) => {
-            setRankList(res.data);
+            setProfile(res.data);
         }).catch((err) => {
             message.setMessage({txt: err.response.data, type: "error"});
         });
@@ -42,19 +43,12 @@ const Ranking = () => {
     }, []);
 
     return (
-        <div className="wcs-ranking">
-            {rankList.map((el) => (
-                <div key={el.id} className="wcs-rank-item">
-                    <div className="wcs-rank-item-avatar">
-                        <img src={`${process.env.REACT_APP_SERVER}/imgs/${el.img}`} alt="Profil avatar" />
-                    </div>
-
-                    <div>{el.nickname}</div>
-                    <div>{el.points}</div>
-                </div>
-            ))}
+        <div className="wcs-profile">
+            {profile && 
+                <div>{profile.name}</div>
+            }
         </div>
-    )
+    );
 };
 
-export default Ranking;
+export default Profile;

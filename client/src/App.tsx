@@ -15,6 +15,7 @@
 
 /* Imports */
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useContext } from 'react';
 /***/
 
 /* Styles */
@@ -25,15 +26,16 @@ import './App.scss';
 import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
 import Ranking from './pages/ranking/Ranking';
+import Profile from './pages/profile/Profile';
 /***/
 
 /* Components */
 import MessagePopup from './components/message-popup/MessagePopup';
+import Navbar from './components/navbar/Navbar';
 /***/
 
-/* Context providers */
-import { MessageContextProvider } from './contexts/MessageContext';
-import { LoggedContextProvider } from './contexts/LoggedContext';
+/* Context */
+import LoggedContext from './contexts/LoggedContext';
 /***/
 
 /* Guards */
@@ -41,27 +43,34 @@ import LoggedUserGuard from './guards/LoggedUserGuard';
 /***/
 
 function App() {
+  const logged = useContext(LoggedContext);
+
   return (
     <div className="App">
-      <LoggedContextProvider>
-        <MessageContextProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={
-                <LoggedUserGuard>
-                  <Ranking />
-                </LoggedUserGuard>
-              }/>
+      <BrowserRouter>
+        {(logged && logged.user) && <Navbar />}
 
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="*" element={<div>Not found</div>} /> {/* Tmp: need to create not found page */}
-            </Routes>
-          </BrowserRouter>
+        <Routes>
+          <Route path="/" element={
+            <LoggedUserGuard>
+              <Ranking />
+            </LoggedUserGuard>
+          }/>
 
-          <MessagePopup />
-        </MessageContextProvider>
-      </LoggedContextProvider>
+          <Route path="/profile" element={
+            <LoggedUserGuard>
+              <Profile />
+            </LoggedUserGuard>
+          }/>
+
+
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="*" element={<div>Not found</div>} /> {/* Tmp: need to create not found page */}
+        </Routes>
+      </BrowserRouter>
+
+      <MessagePopup />
     </div>
   );
 }
