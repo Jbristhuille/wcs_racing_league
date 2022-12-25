@@ -24,6 +24,7 @@ import './App.scss';
 /* Pages */
 import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
+import Ranking from './pages/ranking/Ranking';
 /***/
 
 /* Components */
@@ -48,7 +49,7 @@ function App() {
             <Routes>
               <Route path="/" element={
                 <LoggedUserGuard>
-                  <div>Hello world</div>  {/* Tmp: need to create home page*/}
+                  <Ranking />
                 </LoggedUserGuard>
               }/>
 
