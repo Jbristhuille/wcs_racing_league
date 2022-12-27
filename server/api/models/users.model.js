@@ -10,6 +10,7 @@
     * Name: findById
     * Name: create
     * Name: findByEmail
+    * Name: update
 */
 
 /* Imports */
@@ -23,7 +24,7 @@ const db = require('../../db');
 * Return (Array): Users list
 */
 const find = () => {
-    return db.query('SELECT id, email, nickname, img, points FROM users ORDER BY points DESC');
+    return db.query('SELECT id,  nickname, img, points FROM users ORDER BY points DESC');
 }
 /***/
 
@@ -77,9 +78,24 @@ const create = (email, passwd, nickname) => {
 };
 /***/
 
+/*
+* Name: update
+* Description: Update user
+*
+* Args:
+* - id (Number): User's nickname
+* - nickname (String): User's nickname
+* - img (String): User's avatar image url
+*/
+const update = (id, nickname, img) => {
+    return db.query("UPDATE users SET nickname=?, img=? WHERE id=?", [nickname, img, id]);
+};
+/***/
+
 module.exports = {
     find,
     findById,
     findByEmail,
-    create
+    create,
+    update
 };

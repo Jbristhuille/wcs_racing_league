@@ -4,12 +4,19 @@ import './index.sass';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { MessageContextProvider } from './contexts/MessageContext';
+import { LoggedContextProvider } from './contexts/LoggedContext';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <LoggedContextProvider>
+      <MessageContextProvider>
+        <App />
+      </MessageContextProvider>
+    </LoggedContextProvider>
   </React.StrictMode>
 );
 

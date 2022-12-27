@@ -29,7 +29,6 @@ const Ranking = () => {
     const logged = useContext(LoggedContext);
 
     useEffect(() => {
-
         axios.get(`${process.env.REACT_APP_SERVER}/users`, {
             headers: {
                 "x-token": logged.user ? logged.user.token : ""

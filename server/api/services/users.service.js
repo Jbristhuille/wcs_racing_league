@@ -10,6 +10,8 @@
     * Name: connectionDto
     * Name: isUserExist
     * Name: isLogged
+    * Name: isSelf
+    * Name: editProfileDto
 */
 
 /* Imports */
@@ -92,9 +94,45 @@ const isLogged = (req, res, next) => {
 };
 /***/
 
+/*
+* Name: isSelf
+* Description: Check if current user gettig self profile
+*/
+const isSelf = (req, res, next) => {
+    try {
+        const token = req.headers["x-token"];
+
+        jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+            if (err) return res.status(403).send("Token invalide");
+            else if (user.id == req.params.id) return next();
+            else return res.status(403).send("Non autorisé");
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Une erreur inconnue est survenu');
+    }
+};
+/***/
+
+/*
+* Name: editProfileDto
+* Description: Check update profile payload content
+*/
+const editProfileDto = (req, res, next) => {
+    try {
+        if (req.body.nickname && req.body.img) return next();
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Une erreur inconnue est survenu');
+    }
+}
+/***/
+
 module.exports = {
     createDto,
     connectionDto,
     isUserExist,
-    isLogged
+    isLogged,
+    isSelf,
+    editProfileDto
 };
