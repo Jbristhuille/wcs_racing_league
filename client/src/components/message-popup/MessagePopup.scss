@@ -10,11 +10,7 @@
 .wcs-message-popup {
     color: white;
     
-    &.error {
-        background: var(--danger-color);
-    }
-
-    &.success {
-        background: var(--success-color);
-    }
+    &.error {background-color: var(--danger-color);}
+    &.success {background-color: var(--success-color);}
+    &.warning {background-color: var(--warning-color);}
 }
