@@ -76,10 +76,18 @@ const Profile = () => {
             data["nickname"] = newNickname;
             if (newImg) data["imgFile"] = newImg;
 
-            axios.put(`${process.env.REACT_APP_SERVER}/users/${logged.user.id}`, data).then((res) => {
-                message.setMessage({txt: "Profil mis à jour", type: "success"});
-                logged.setUser(res.data);
+            axios.put(`${process.env.REACT_APP_SERVER}/users/${logged.user.id}`, data, {
+                headers: {
+                    "x-token": logged.user ? logged.user.token : ""
+                }
+            }).then((res) => {
+                let user = {...logged.user};
+                user["img"] = res.data.img;
+                user["nickname"] = res.data.nickname;
+
+                logged.setUser(user);
                 setIsEdit(false);
+                message.setMessage({txt: "Profil mis à jour", type: "success"});
             }).catch((err) => {
                 message.setMessage({txt: err.response.data, type: "error"});
             });
@@ -109,7 +117,7 @@ const Profile = () => {
                         <input  type="file"
                                 id="avatar"
                                 onChange={checkFile}
-                                accept="image/png, image/jpeg, image/gif"/>
+                                accept="image/png, image/jpeg"/>
                     </div>
 
                     <div className="wcs-profile-edit-item">

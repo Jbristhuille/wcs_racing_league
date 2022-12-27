@@ -11,6 +11,7 @@
     * Name: isUserExist
     * Name: isLogged
     * Name: isSelf
+    * Name: editProfileDto
 */
 
 /* Imports */
@@ -113,10 +114,25 @@ const isSelf = (req, res, next) => {
 };
 /***/
 
+/*
+* Name: editProfileDto
+* Description: Check update profile payload content
+*/
+const editProfileDto = (req, res, next) => {
+    try {
+        if (req.body.nickname && req.body.img) return next();
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Une erreur inconnue est survenu');
+    }
+}
+/***/
+
 module.exports = {
     createDto,
     connectionDto,
     isUserExist,
     isLogged,
-    isSelf
+    isSelf,
+    editProfileDto
 };

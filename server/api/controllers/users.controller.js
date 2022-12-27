@@ -10,9 +10,11 @@
     * Name: getUsersList
     * Name: signup
     * Name: login
+    * Name: updateProfile
 */
 
 /* Imports */
+const fs = require("fs");
 const sha256 = require('js-sha256');
 const jwt = require('jsonwebtoken');
 const usersModel = require('../models/users.model');
@@ -114,9 +116,50 @@ const login = async (req, res) => {
 };
 /***/
 
+/*
+* Name: updateProfile
+* Description: Update user profile
+*
+* Params:
+* - id (String): User's id
+*
+* Body:
+* - nickname (String): User's nickname
+* - imgFile (String): Optional, new avatar image
+*
+* Return (Object): Updated user's data
+*/
+const updateProfile = async (req, res) => {
+    try {
+        let id = req.params.id;
+        let {img, nickname, imgFile} = req.body;
+        
+        if (imgFile) {
+            if (img !== "default.png" && fs.existsSync(`public/imgs/${img}`)) fs.unlinkSync(`public/imgs/${img}`); // Remove old avatar
+            
+            let ext = "."+imgFile.split(';')[0].split('/')[1];
+            let base64Data = imgFile.replace(/^data:image\/(png|jpeg|jpg);base64,/, ""); // Convert base64 img to file
+            img = String(id+"-"+Date.now()+ext);
+            fs.writeFileSync(`public/imgs/${img}`, base64Data, 'base64');
+        }
+
+        await usersModel.update(Number(id), nickname, img);
+        
+        let [[user]] = await usersModel.findById(Number(id));
+        delete user.passwd;
+        
+        return res.status(200).send(user);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Une erreur inconnue est survenu');
+    }
+}
+/***/
+
 module.exports = {
     getUserById,
     getUsersList,
     signup,
-    login
+    login,
+    updateProfile
 };
