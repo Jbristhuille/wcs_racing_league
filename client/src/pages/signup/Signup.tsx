@@ -12,7 +12,7 @@
 
 /* Imports */
 import { useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import axios from 'axios';
 /***/
 
@@ -109,6 +109,8 @@ const Signup = () => {
                         onClick={signupUser}>
                     Inscription
                 </button>
+
+                <NavLink to="/login">Déjà inscrit ? Connexion.</NavLink>
             </div>
         </div>
     )

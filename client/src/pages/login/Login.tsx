@@ -13,7 +13,7 @@
 /* Imports */
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 /***/
 
 /* Styles */
@@ -86,6 +86,8 @@ const Login = () => {
                         onClick={connectUser}>
                     Connexion
                 </button>
+
+                <NavLink to="/signup">Pas encore inscrit ? Inscription.</NavLink>
             </div>
         </div>
     );
