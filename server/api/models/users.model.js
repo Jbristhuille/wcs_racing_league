@@ -70,7 +70,7 @@ const findByEmail = (email) => {
 * - nickname (String): New user's nickname
 */
 const create = (email, passwd, nickname) => {
-    return db.query('INSERT INTO users (email, passwd, nickname) VALUE (?, ?, ?)', [
+    return db.query('INSERT INTO users (email, passwd, nickname, points) VALUE (?, ?, ?, 100)', [
         email,
         passwd,
         nickname
