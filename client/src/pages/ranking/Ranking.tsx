@@ -21,6 +21,7 @@ import LoggedContext from "../../contexts/LoggedContext";
 
 /* Styles */
 import "./Ranking.scss";
+import * as ws from "../../services/Websocket";
 /***/
 
 const Ranking = () => {
@@ -28,7 +29,10 @@ const Ranking = () => {
     const message = useContext(MessageContext);
     const logged = useContext(LoggedContext);
 
+    
     useEffect(() => {
+        if (logged.user) ws.connect(logged.user);
+
         axios.get(`${process.env.REACT_APP_SERVER}/users`, {
             headers: {
                 "x-token": logged.user ? logged.user.token : ""

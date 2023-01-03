@@ -7,6 +7,8 @@
 /* SUMMARY
     * Imports
     * Config
+    * Start websocket server
+    * Start server
 */
 
 /* Imports */
@@ -14,6 +16,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const router = require('./router');
+const ws = require('./api/services/websocket.service');
 /***/
 
 /* Config */
@@ -22,6 +25,10 @@ app.use(cors());
 app.use(express.json({limit: '2mb'}));
 app.use(express.static('public'));
 app.use(router);
+/***/
+
+/* Start websocket server */
+ws.open();
 /***/
 
 /* Start server */

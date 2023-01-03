@@ -7,68 +7,66 @@
 /* SUMMARY
     * Imports
     * Variables
-    * Name: openSocket
+    * Name: findSocket
+    * Name: open
 */
 
 /* Imports */
 const { Server } = require('socket.io');
-const { find } = require('../models/users.model');
 /***/
 
 /* Variables */
 let sockets = [];
 /***/
 
-const clear = (id) => {
-    let s = sockets.findIndex((el) => id == el.id);
-    if (s != -1) sockets.slice(s, 1);
-};
-
-const setPort = () => {
-    let i = 0;
-    let port = 8000 + i;
-    let isEqual = false;
-
-    do {
-        for (let p = 0; p < sockets.length; p++) {
-            if (sockets[p].port != port) {
-                isEqual = false;
-                break;
-            } else {
-                port++;
-            }
-        }
-    } while (isEqual);
-
-    return port;
-};
-
 /*
-* Name: openSocket
-* Description: Open websocket for user
+* Name: findSocket
+* Description: Find socket by ID
 *
 * Args:
-* - id (Number): User's id
+* - id (String): User's id
+*
+* Return (Object): Socket's data or null
 */
-const openSocket = async (id) => {
-    clear(id);
-    let port = setPort();
-    let inst = {
-        id: id,
-        date: Date.now(),
-        port: port,
-        socket: new Server()
-    };
+const findSocket = (id) => {
+    return sockets.find((el) => el.id === id);
+}
+/***/
 
-    inst.socket.on("connection", (socket) => {
-        console.log("open ", inst.id);
-        socket.emit("hello", "world");
+/*
+* Name: open
+* Description: Start websocket server
+*/
+const open = () => {
+    let ws = new Server({
+        cors: {}
     });
 
-    inst.socket.listen(port);
+    ws.on("connection", (socket) => {
+        console.log(`WS client connected: ${socket.id}`);
+
+        socket.on("auth", (data) => {
+            let s = findSocket(data.id);
+
+            if (!s) {
+                sockets.push({
+                    id: data.id,
+                    date: Date.now(),
+                    socket: socket
+                });
+            }
+        });
+
+        socket.on("disconnect", () => {
+            console.log(`WS client disconnected: ${socket.id}`);
+        });
+    });
+
+    ws.listen(process.env.WS_PORT);
 }
 /***/
 
 module.exports = {
-    openSocket
+    open,
+    findSocket
 };
