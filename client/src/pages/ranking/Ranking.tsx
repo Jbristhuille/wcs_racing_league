@@ -22,10 +22,12 @@ import LoggedContext from "../../contexts/LoggedContext";
 /* Styles */
 import "./Ranking.scss";
 import * as ws from "../../services/Websocket";
+import MatchDetails from "../../components/match-details/MatchDetails";
 /***/
 
 const Ranking = () => {
     const [rankList, setRankList] = useState<any[]>([]);
+    const [matchDetails, setMatchDetails] = useState<any>(null);
     const message = useContext(MessageContext);
     const logged = useContext(LoggedContext);
 
@@ -48,7 +50,15 @@ const Ranking = () => {
     return (
         <div className="wcs-ranking">
             {rankList.map((el) => (
-                <div key={el.id} className="wcs-rank-item">
+                <div    key={el.id}
+                        className={`wcs-rank-item ${logged.user.id !== el.id && 'available'}`}
+                        onClick={() => {
+                            logged.user.id !== el.id && setMatchDetails({
+                                player1: logged.user,
+                                player2: el,
+                                close: () => setMatchDetails(null)
+                            })
+                        }}>
                     <div className="wcs-rank-item-avatar">
                         <img src={`${process.env.REACT_APP_SERVER}/imgs/${el.img}`} alt="Profil avatar" />
                     </div>
@@ -57,6 +67,8 @@ const Ranking = () => {
                     <div>{el.points}</div>
                 </div>
             ))}
+
+            {matchDetails && <MatchDetails {...matchDetails}/>}
         </div>
     )
 };

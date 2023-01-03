@@ -15,6 +15,14 @@
         align-items: center;
         border: solid 1px black;
         border-radius: 3px;
+        
+        &.available {
+            cursor: pointer;
+    
+            &:hover {
+                box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.05);
+            }
+        }
 
         .wcs-rank-item-avatar {
             border: solid 1px black;
