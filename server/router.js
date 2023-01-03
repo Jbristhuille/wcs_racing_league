@@ -18,6 +18,7 @@ const router = express.Router();
 
 /* Controllers */
 const usersController = require('./api/controllers/users.controller');
+const matchController = require('./api/controllers/match.controller');
 /***/
 
 /* Services */
@@ -30,6 +31,10 @@ router.post('/users', usersService.createDto, usersService.isUserExist, usersCon
 router.get('/users', usersService.isLogged ,usersController.getUsersList);
 router.get('/users/:id', usersService.isSelf, usersController.getUserById);
 router.put('/users/:id', usersService.editProfileDto, usersService.isSelf, usersController.updateProfile);
+/***/
+
+/* Match */
+router.post('/match', usersService.isLogged, matchController.add);
 /***/
 
 module.exports = router;

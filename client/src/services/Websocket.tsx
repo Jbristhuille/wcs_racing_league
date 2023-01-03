@@ -9,32 +9,34 @@
 */
 
 /* Imports */
+import { useState } from 'react';
 import { io } from 'socket.io-client';
 /***/
 
-/* Variables */
-let isConnected = false;
-/***/
+const useWs = () => {
+    const [isConnected, setIsConnected] = useState<boolean>(false);
+    const [socket, setSocket] = useState<any>();
 
-/*
-* Name: connect
-* Description: Connect client to websocket server
-*
-* Args:
-* - user (Object): User's data
-*   - id (Number): User's id
-*/
-const connect = (user: any) => {
-    if (!isConnected) {
-        isConnected = true;
-        const socket = io(String(process.env.REACT_APP_WS));
-    
-        socket.emit("auth", user);
+    const connect = (user: any) => {
+        if (!isConnected) {
+            setIsConnected(true);
+
+            let s = io(String(process.env.REACT_APP_WS));
+            s.emit("auth", user);
+
+            setSocket(s);
+        }
     }
-}
-/***/
+
+    return ({
+        connect,
+        isConnected,
+        socket
+    });
+};
+
+
 
 export {
-    connect,
-    isConnected
+    useWs
 };

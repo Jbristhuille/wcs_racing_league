@@ -21,7 +21,7 @@ import LoggedContext from "../../contexts/LoggedContext";
 
 /* Styles */
 import "./Ranking.scss";
-import * as ws from "../../services/Websocket";
+import { useWs } from '../../services/Websocket';
 import MatchDetails from "../../components/match-details/MatchDetails";
 /***/
 
@@ -30,6 +30,7 @@ const Ranking = () => {
     const [matchDetails, setMatchDetails] = useState<any>(null);
     const message = useContext(MessageContext);
     const logged = useContext(LoggedContext);
+    const ws = useWs();
 
     
     useEffect(() => {
@@ -46,6 +47,14 @@ const Ranking = () => {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        if (ws.socket) {
+            ws.socket.on("confirm", (data: any) => {
+                console.log(data);
+            });
+        }
+    }, [ws.socket]);
 
     return (
         <div className="wcs-ranking">

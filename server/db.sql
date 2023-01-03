@@ -11,3 +11,10 @@ CREATE TABLE users (
     img VARCHAR(512) DEFAULT 'default.png',
     points INT DEFAULT 0
 );
+
+CREATE TABLE matches (
+    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    winId INT NOT NULL,
+    loseId INT NOT NULL,
+    date BIGINT NOT NULL
+);

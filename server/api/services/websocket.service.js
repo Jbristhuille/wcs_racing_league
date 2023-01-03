@@ -58,6 +58,9 @@ const open = () => {
         });
 
         socket.on("disconnect", () => {
+            let index = sockets.findIndex((el) => el.socket.id == socket.id); // Remove from sockets list
+            if (index != -1) sockets.splice(index, 1);
+
             console.log(`WS client disconnected: ${socket.id}`);
         });
     });
