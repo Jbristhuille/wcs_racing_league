@@ -8,6 +8,7 @@
     * Imports
     * Variables
     * Name: findSocket
+    * Name: removeSocket
     * Name: open
 */
 
@@ -34,6 +35,19 @@ const findSocket = (id) => {
 /***/
 
 /*
+* Name: removeSocket
+* Description: Remove old socket in array
+*
+* Args:
+* - socketId (String): Socket id
+*/
+const removeSocket = (socketId) => {
+    let i = sockets.findIndex((el) => el.socket.id === socketId);
+    if (i != -1) sockets.splice(i, 1);
+};
+/***/
+
+/*
 * Name: open
 * Description: Start websocket server
 */
@@ -43,24 +57,21 @@ const open = () => {
     });
 
     ws.on("connection", (socket) => {
-        console.log(`WS client connected: ${socket.id}`);
-
         socket.on("auth", (data) => {
             let s = findSocket(data.id);
+            if (s) removeSocket(s.socket.id);
+            
+            sockets.push({
+                id: data.id,
+                date: Date.now(),
+                socket: socket
+            });
 
-            if (!s) {
-                sockets.push({
-                    id: data.id,
-                    date: Date.now(),
-                    socket: socket
-                });
-            }
+            console.log(`WS client connected: ${socket.id}`);
         });
 
         socket.on("disconnect", () => {
-            let index = sockets.findIndex((el) => el.socket.id == socket.id); // Remove from sockets list
-            if (index != -1) sockets.splice(index, 1);
-
+            removeSocket(socket.id);
             console.log(`WS client disconnected: ${socket.id}`);
         });
     });
