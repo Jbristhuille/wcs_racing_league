@@ -27,12 +27,15 @@ const ws = require('../services/websocket.service');
 const add = async (req, res) => {
     try {
         const {winner, loser, target} = req.body;
-        await matchModel.insert(winner.id, loser.id);
+        let [result] = await matchModel.insert(winner.id, loser.id);
 
         let s = ws.findSocket(target);
-        
         if (s) {
-            s.socket.emit('confirm', {winner, loser});
+            s.socket.emit('confirm', {
+                id: result.insertId,
+                winner: winner,
+                loser: loser
+            });
         }
 
         return res.status(201).send();
@@ -43,6 +46,27 @@ const add = async (req, res) => {
 };
 /***/
 
+/*
+* Name: result
+* Description: Confirm or contest results
+*
+* Params:
+* - id (String): Match's id
+*
+* Body:
+* - result (Boolean): Confirm or contest
+*/
+const result = (req, res) => {
+    try {
+        return res.status(200).send();
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Une erreur inconnue est survenu');
+    }
+};
+/***/
+
 module.exports = {
-    add
+    add,
+    result
 };

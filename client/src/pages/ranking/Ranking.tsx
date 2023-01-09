@@ -23,15 +23,16 @@ import LoggedContext from "../../contexts/LoggedContext";
 import "./Ranking.scss";
 import { useWs } from '../../services/Websocket';
 import MatchDetails from "../../components/match-details/MatchDetails";
+import ConfirmMatch from "../../components/confirm-match/ConfirmMatch";
 /***/
 
 const Ranking = () => {
     const [rankList, setRankList] = useState<any[]>([]);
     const [matchDetails, setMatchDetails] = useState<any>(null);
+    const [confirmMatch, setConfirmMatch] = useState<any>(null);
     const message = useContext(MessageContext);
     const logged = useContext(LoggedContext);
     const ws = useWs();
-
     
     useEffect(() => {
         if (logged.user) ws.connect(logged.user);
@@ -52,6 +53,13 @@ const Ranking = () => {
         if (ws.socket) {
             ws.socket.on("confirm", (data: any) => {
                 console.log(data);
+
+                setConfirmMatch({
+                    id: data.id,
+                    winner: data.winner,
+                    loser: data.loser,
+                    close: () => setConfirmMatch(null)
+                });
             });
         }
     }, [ws.socket]);
@@ -78,6 +86,7 @@ const Ranking = () => {
             ))}
 
             {matchDetails && <MatchDetails {...matchDetails}/>}
+            {confirmMatch && <ConfirmMatch {...confirmMatch} />}
         </div>
     )
 };

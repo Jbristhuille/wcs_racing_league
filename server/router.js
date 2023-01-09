@@ -35,6 +35,7 @@ router.put('/users/:id', usersService.editProfileDto, usersService.isSelf, users
 
 /* Match */
 router.post('/match', usersService.isLogged, matchController.add);
+router.put('/match/:id', usersService.isLogged, matchController.result);
 /***/
 
 module.exports = router;
